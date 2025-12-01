@@ -16,16 +16,16 @@ import java.time.Instant;
 public record SessionValidator(SessionRepository sessionRepository) {
 
     /**
-    * A method to load a session from the repository.
-    *
-    * @param sessionId The ID of the session to load.
-    * @return The loaded session object.
-    *
-    * @author IFD
-    * @since 2025-11-29
-    * */
+     * A method to load a session from the repository.
+     *
+     * @param sessionId The ID of the session to load.
+     * @return The loaded session object.
+     * @author IFD
+     * @since 2025-11-29
+     *
+     */
     public Session loadSession(String sessionId) {
-        return sessionRepository.find(sessionId);
+        return sessionRepository.findById(sessionId);
     }
 
     /**

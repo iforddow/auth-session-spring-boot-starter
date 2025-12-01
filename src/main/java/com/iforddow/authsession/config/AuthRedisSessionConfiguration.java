@@ -4,7 +4,6 @@ import com.iforddow.authsession.common.AuthProperties;
 import com.iforddow.authsession.entity.Session;
 import com.iforddow.authsession.repository.DefaultSessionRepository;
 import com.iforddow.authsession.repository.SessionRepository;
-import lombok.NonNull;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +14,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import tools.jackson.databind.ObjectMapper;
+import org.jspecify.annotations.NonNull;
 
 /**
 * A configuration class for Redis session management in the authentication module.

@@ -5,14 +5,16 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
+
 import java.util.Objects;
 
 /**
-* A utility class for filter-related operations.
-*
-* @author IFD
-* @since 2025-11-29
-* */
+ * A utility class for filter-related operations.
+ *
+ * @author IFD
+ * @since 2025-11-29
+ *
+ */
 public record FilterUtility(AuthProperties authProperties) {
 
     /**
@@ -68,7 +70,7 @@ public record FilterUtility(AuthProperties authProperties) {
      * @since 2025-11-05
      *
      */
-    public String getIncomingSessionId(HttpServletRequest request) throws ServletException {
+    public String getIncomingSessionId(HttpServletRequest request) {
 
         // Get cookies and Authorization header
         Cookie[] cookies = request.getCookies();
@@ -83,24 +85,29 @@ public record FilterUtility(AuthProperties authProperties) {
         // If both are provided, check to see if they are the same, if not, throw exception
         if (isNotNullOrEmpty(sessionIdFromHeader) && isNotNullOrEmpty(sessionIdFromCookie)) {
             if (!sessionIdFromHeader.equals(sessionIdFromCookie)) {
-                throw new ServletException("Conflicting session IDs provided in both header and cookie");
+                return null;
             }
         }
 
         // If the cookie session id is present, return it
-        return Objects.requireNonNullElse(sessionIdFromCookie, sessionIdFromHeader);
+        if(isNotNullOrEmpty(sessionIdFromCookie)) {
+            return sessionIdFromCookie;
+        }
+
+        // Otherwise return the header session id
+        return sessionIdFromHeader;
 
     }
 
     /**
-    * A method to check if a string is not null or empty.
-    *
-    * @param string The string to check.
-    * @return true if the string is not null and not empty, false otherwise.
-    *
-    * @author IFD
-    * @since 2025-11-29
-    * */
+     * A method to check if a string is not null or empty.
+     *
+     * @param string The string to check.
+     * @return true if the string is not null and not empty, false otherwise.
+     * @author IFD
+     * @since 2025-11-29
+     *
+     */
     public boolean isNotNullOrEmpty(String string) {
         return string != null && !string.isBlank();
     }

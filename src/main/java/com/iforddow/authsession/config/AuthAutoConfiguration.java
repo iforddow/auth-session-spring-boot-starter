@@ -6,8 +6,8 @@ import com.iforddow.authsession.validator.SessionValidator;
 import com.iforddow.authsession.filter.AuthFilter;
 import com.iforddow.authsession.repository.SessionRepository;
 import com.iforddow.authsession.utility.FilterUtility;
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -24,7 +24,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @Configuration
 @EnableWebSecurity
 @EnableConfigurationProperties(AuthProperties.class)
-@RequiredArgsConstructor
 @ConditionalOnProperty(
         prefix = "auth.session",
         name = "enabled",
@@ -33,6 +32,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 public class AuthAutoConfiguration {
 
     private final AuthProperties authProperties;
+
+    public AuthAutoConfiguration(AuthProperties authProperties) {
+        this.authProperties = authProperties;
+    }
 
     /**
     * A bean that creates a FilterUtility using the provided AuthProperties.
@@ -44,6 +47,7 @@ public class AuthAutoConfiguration {
     * */
     @Bean
     @ConditionalOnMissingBean
+    @ConditionalOnClass(AuthProperties.class)
     public FilterUtility filterUtility() {
         return new FilterUtility(authProperties);
     }

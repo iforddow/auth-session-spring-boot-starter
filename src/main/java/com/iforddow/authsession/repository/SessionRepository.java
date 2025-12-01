@@ -2,6 +2,9 @@ package com.iforddow.authsession.repository;
 
 import com.iforddow.authsession.entity.Session;
 
+import java.util.List;
+import java.util.UUID;
+
 /**
 * A repository interface for session management.
 *
@@ -9,7 +12,7 @@ import com.iforddow.authsession.entity.Session;
 * @since 2025-11-29
 * */
 public interface SessionRepository {
-    Session find(String sessionId);
+    Session findById(String sessionId);
 
     void save(Session session);
 
@@ -18,4 +21,6 @@ public interface SessionRepository {
     void delete(Session session);
 
     boolean exists(String sessionId);
+
+    List<Session> findAllByAccountId(UUID accountId);
 }

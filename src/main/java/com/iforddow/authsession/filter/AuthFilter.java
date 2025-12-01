@@ -3,12 +3,11 @@ package com.iforddow.authsession.filter;
 import com.iforddow.authsession.validator.SessionValidator;
 import com.iforddow.authsession.entity.Session;
 import com.iforddow.authsession.utility.FilterUtility;
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -22,11 +21,15 @@ import java.util.Collections;
 * @author IFD
 * @since 2025-11-27
 * */
-@RequiredArgsConstructor
 public class AuthFilter extends OncePerRequestFilter {
 
     private final SessionValidator sessionValidator;
     private final FilterUtility filterUtility;
+
+    public AuthFilter(SessionValidator sessionValidator, FilterUtility filterUtility) {
+        this.sessionValidator = sessionValidator;
+        this.filterUtility = filterUtility;
+    }
 
     /**
      * A filter that intercepts HTTP requests to check for active Session in the Authorization header.
@@ -43,9 +46,9 @@ public class AuthFilter extends OncePerRequestFilter {
      * @since 2025-06-15
      * */
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request,
-                                    @NonNull HttpServletResponse response,
-                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@Nonnull HttpServletRequest request,
+                                    @Nonnull HttpServletResponse response,
+                                    @Nonnull FilterChain filterChain) throws ServletException, IOException {
 
         // Get existing token from either cookie or header
         String sessionId = filterUtility.getIncomingSessionId(request);

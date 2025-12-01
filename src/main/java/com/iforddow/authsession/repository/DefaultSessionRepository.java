@@ -5,6 +5,9 @@ import com.iforddow.authsession.entity.Session;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import java.util.List;
+import java.util.UUID;
+
 /**
 * A service class dressed as a repository for
 * session management using Redis.
@@ -26,7 +29,7 @@ public record DefaultSessionRepository(AuthProperties authProperties,
     * @since 2025-11-29
     * */
     @Override
-    public Session find(String sessionId) {
+    public Session findById(String sessionId) {
         String key = authProperties.getSessionPrefix() + sessionId;
         return sessionRedisTemplate.opsForValue().get(key);
     }
@@ -98,5 +101,27 @@ public record DefaultSessionRepository(AuthProperties authProperties,
         String key = authProperties.getSessionPrefix() + sessionId;
 
         return sessionRedisTemplate.hasKey(key);
+    }
+
+    /**
+    * A method to get all sessions for a user by their account ID.
+    *
+    * @param accountId The ID of the account whose sessions are to be retrieved.
+    * @return A list of Session objects associated with the account.
+    *
+    * @author IFD
+    * @since 2025-11-30
+    * */
+    @Override
+    public List<Session> findAllByAccountId(UUID accountId) {
+        String userSessionsKey = authProperties.getAccountSessionPrefix() + accountId.toString();
+        var sessionIds = stringRedisTemplate.opsForSet().members(userSessionsKey);
+        if (sessionIds == null || sessionIds.isEmpty()) {
+            return List.of();
+        }
+        return sessionIds.stream()
+                .map(this::findById)
+                .filter(java.util.Objects::nonNull)
+                .toList();
     }
 }
