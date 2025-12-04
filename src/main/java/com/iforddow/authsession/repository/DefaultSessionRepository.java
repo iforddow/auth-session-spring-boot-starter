@@ -124,4 +124,11 @@ public record DefaultSessionRepository(AuthProperties authProperties,
                 .filter(java.util.Objects::nonNull)
                 .toList();
     }
+
+    public void deleteAllByAccountId(UUID accountId) {
+        List<Session> sessions = findAllByAccountId(accountId);
+        for (Session session : sessions) {
+            delete(session);
+        }
+    }
 }

@@ -1,12 +1,8 @@
 package com.iforddow.authsession.utility;
 
 import com.iforddow.authsession.common.AuthProperties;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-
-
-import java.util.Objects;
 
 /**
  * A utility class for filter-related operations.
@@ -108,7 +104,7 @@ public record FilterUtility(AuthProperties authProperties) {
      * @since 2025-11-29
      *
      */
-    public boolean isNotNullOrEmpty(String string) {
+    private boolean isNotNullOrEmpty(String string) {
         return string != null && !string.isBlank();
     }
 

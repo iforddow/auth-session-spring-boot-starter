@@ -23,4 +23,6 @@ public interface SessionRepository {
     boolean exists(String sessionId);
 
     List<Session> findAllByAccountId(UUID accountId);
+
+    void deleteAllByAccountId(UUID accountId);
 }
