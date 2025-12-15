@@ -14,19 +14,17 @@ import java.util.UUID;
  * */
 public class Session implements Serializable {
 
-    private String sessionId;
-    private UUID accountId;
-    private Instant createdAt;
-    private String ip;
-    private String userAgent;
+    private final String sessionId;
+    private final UUID accountId;
+    private final Instant createdAt;
+    private final String userAgent;
     private Instant expiresAt;
     private Instant hardExpiration;
 
-    public Session(String sessionId, UUID accountId, Instant createdAt, String ip, String userAgent, Instant expiresAt, Instant hardExpiration) {
+    public Session(String sessionId, UUID accountId, Instant createdAt, String userAgent, Instant expiresAt, Instant hardExpiration) {
         this.sessionId = sessionId;
         this.accountId = accountId;
         this.createdAt = createdAt;
-        this.ip = ip;
         this.userAgent = userAgent;
         this.expiresAt = expiresAt;
         this.hardExpiration = hardExpiration;
@@ -36,45 +34,20 @@ public class Session implements Serializable {
         return new Builder();
     }
 
-
     public String getSessionId() {
         return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
     }
 
     public UUID getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(UUID accountId) {
-        this.accountId = accountId;
-    }
-
     public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
     public String getUserAgent() {
         return userAgent;
-    }
-
-    public void setUserAgent(String userAgent) {
-        this.userAgent = userAgent;
     }
 
     public Instant getExpiresAt() {
@@ -97,7 +70,6 @@ public class Session implements Serializable {
         private String sessionId;
         private UUID accountId;
         private Instant createdAt;
-        private String ip;
         private String userAgent;
         private Instant expiresAt;
         private Instant hardExpiration;
@@ -117,11 +89,6 @@ public class Session implements Serializable {
             return this;
         }
 
-        public Builder ip(String ip) {
-            this.ip = ip;
-            return this;
-        }
-
         public Builder userAgent(String userAgent) {
             this.userAgent = userAgent;
             return this;
@@ -138,7 +105,7 @@ public class Session implements Serializable {
         }
 
         public Session build() {
-            return new Session(sessionId, accountId, createdAt, ip, userAgent, expiresAt, hardExpiration);
+            return new Session(sessionId, accountId, createdAt, userAgent, expiresAt, hardExpiration);
         }
     }
 }

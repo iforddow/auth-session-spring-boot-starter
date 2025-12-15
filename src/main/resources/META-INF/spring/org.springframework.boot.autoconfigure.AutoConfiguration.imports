@@ -1,2 +1,3 @@
-com.iforddow.authsession.config.AuthAutoConfiguration
-com.iforddow.authsession.config.AuthRedisSessionConfiguration
+com.iforddow.authsession.config.SessionAutoConfiguration
+com.iforddow.authsession.config.SessionRedisConfiguration
+

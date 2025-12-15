@@ -1,6 +1,6 @@
 package com.iforddow.authsession.utility;
 
-import com.iforddow.authsession.common.AuthProperties;
+import com.iforddow.authsession.common.SessionProperties;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
  * @since 2025-11-29
  *
  */
-public record FilterUtility(AuthProperties authProperties) {
+public record SessionFilterUtility(SessionProperties sessionProperties) {
 
     /**
      * A method to normalize a token by removing the "Bearer " prefix if present.
@@ -45,7 +45,7 @@ public record FilterUtility(AuthProperties authProperties) {
         if (cookies == null) return null;
 
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(authProperties.getCookieName())) {
+            if (cookie.getName().equals(sessionProperties.getCookieName())) {
                 return cookie.getValue();
             }
         }

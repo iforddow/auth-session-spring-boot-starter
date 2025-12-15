@@ -1,8 +1,8 @@
 package com.iforddow.authsession.filter;
 
+import com.iforddow.authsession.utility.SessionFilterUtility;
 import com.iforddow.authsession.validator.SessionValidator;
 import com.iforddow.authsession.entity.Session;
-import com.iforddow.authsession.utility.FilterUtility;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,12 +21,12 @@ import java.util.Collections;
 * @author IFD
 * @since 2025-11-27
 * */
-public class AuthFilter extends OncePerRequestFilter {
+public class SessionFilter extends OncePerRequestFilter {
 
     private final SessionValidator sessionValidator;
-    private final FilterUtility filterUtility;
+    private final SessionFilterUtility filterUtility;
 
-    public AuthFilter(SessionValidator sessionValidator, FilterUtility filterUtility) {
+    public SessionFilter(SessionValidator sessionValidator, SessionFilterUtility filterUtility) {
         this.sessionValidator = sessionValidator;
         this.filterUtility = filterUtility;
     }

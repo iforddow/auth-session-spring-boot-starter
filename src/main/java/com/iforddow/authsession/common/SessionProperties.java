@@ -1,6 +1,7 @@
 package com.iforddow.authsession.common;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.bind.Name;
 
 /**
 * A properties class for authentication session configuration
@@ -10,21 +11,24 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 * @since 2025-11-29
 * */
 @ConfigurationProperties(prefix = "auth.session")
-public class AuthProperties {
+public class SessionProperties {
 
     private boolean enabled = true;
 
+    @Name("session.prefix")
     private String sessionPrefix = "auth:session:";
 
+    @Name("account.session.prefix")
     private String accountSessionPrefix = "auth:account:sessions:";
 
+    @Name("cookie.name")
     private String cookieName = "session";
 
-    private String redisHost = "localhost";
+    @Name("hash.secret")
+    private String hashSecret = "ChangeThis;ToASecureRandomString";
 
-    private int redisPort = 6379;
-
-    private String redisPassword = "";
+    @Name("hash.algo")
+    private String hashAlgo = "HmacSHA256";
 
 
     public boolean isEnabled() {
@@ -59,27 +63,19 @@ public class AuthProperties {
         this.cookieName = cookieName;
     }
 
-    public String getRedisHost() {
-        return redisHost;
+    public String getHashSecret() {
+        return hashSecret;
     }
 
-    public void setRedisHost(String redisHost) {
-        this.redisHost = redisHost;
+    public void setHashSecret(String hashSecret) {
+        this.hashSecret = hashSecret;
     }
 
-    public int getRedisPort() {
-        return redisPort;
+    public String getHashAlgo() {
+        return hashAlgo;
     }
 
-    public void setRedisPort(int redisPort) {
-        this.redisPort = redisPort;
-    }
-
-    public String getRedisPassword() {
-        return redisPassword;
-    }
-
-    public void setRedisPassword(String redisPassword) {
-        this.redisPassword = redisPassword;
+    public void setHashAlgo(String hashAlgo) {
+        this.hashAlgo = hashAlgo;
     }
 }

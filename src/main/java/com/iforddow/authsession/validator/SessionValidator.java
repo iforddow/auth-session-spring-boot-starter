@@ -1,7 +1,9 @@
 package com.iforddow.authsession.validator;
 
+import com.iforddow.authsession.common.SessionProperties;
 import com.iforddow.authsession.entity.Session;
-import com.iforddow.authsession.repository.SessionRepository;
+import com.iforddow.authsession.utility.SessionHashUtility;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.time.Instant;
 
@@ -13,7 +15,7 @@ import java.time.Instant;
  * @since 2025-11-27
  *
  */
-public record SessionValidator(SessionRepository sessionRepository) {
+public record SessionValidator(RedisTemplate<String, Session> sessionRedisTemplate, SessionProperties sessionProperties, SessionHashUtility sessionHashUtility) {
 
     /**
      * A method to load a session from the repository.
@@ -25,7 +27,8 @@ public record SessionValidator(SessionRepository sessionRepository) {
      *
      */
     public Session loadSession(String sessionId) {
-        return sessionRepository.findById(sessionId);
+        String key = sessionProperties.getSessionPrefix() + sessionHashUtility.hmacSha256(sessionId);
+        return sessionRedisTemplate.opsForValue().get(key);
     }
 
     /**

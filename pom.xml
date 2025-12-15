@@ -12,7 +12,7 @@
 
     <groupId>com.iforddow</groupId>
     <artifactId>auth-session-spring-boot-starter</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <name>auth-session-spring-boot-starter</name>
     <description>Spring Boot Starter for Authentication Sessions</description>
 
